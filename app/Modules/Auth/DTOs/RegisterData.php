@@ -4,8 +4,8 @@ namespace App\Modules\Auth\DTOs;
 
 use App\Modules\Auth\Http\Requests\RegisterRequest;
 
-final class RegisterData
-{
+final class RegisterData{
+    
     public function __construct(
         public readonly string $name,
         public readonly string $email,

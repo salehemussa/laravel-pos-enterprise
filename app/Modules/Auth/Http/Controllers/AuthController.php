@@ -12,12 +12,8 @@ use App\Modules\Auth\DTOs\RegisterData;
 use App\Modules\Auth\DTOs\LoginData;
 use App\Modules\Auth\Http\Resources\AuthUserResource;
 
-class AuthController extends Controller
-{
-    public function register(
-        RegisterRequest $request,
-        RegisterUserAction $registerUser
-    ): JsonResponse {
+class AuthController extends Controller{
+    public function register(RegisterRequest $request, RegisterUserAction $registerUser): JsonResponse {
         $user = $registerUser->execute(RegisterData::fromRequest($request));
 
         // Optional: auto-login immediately after registration
@@ -26,16 +22,13 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Registration successful.',
             'token' => $token,
-            'token_type' => 'bearer',
+            'token_type' => 'bearer', 
             'expires_in' => auth('api')->factory()->getTTL() * 60, // seconds
             'user' => new AuthUserResource($user),
         ], 201);
     }
 
-    public function login(
-        LoginRequest $request,
-        LoginUserAction $loginUser
-    ): JsonResponse {
+    public function login(LoginRequest $request, LoginUserAction $loginUser): JsonResponse {
         $result = $loginUser->execute(LoginData::fromRequest($request));
 
         return response()->json([

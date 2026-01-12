@@ -17,6 +17,7 @@ class LoginUserAction
      * Authenticate using JWT guard.
      * Returns token string + authenticated user.
      */
+    
     public function execute(LoginData $data): array
     {
         // JWT attempt expects credentials
