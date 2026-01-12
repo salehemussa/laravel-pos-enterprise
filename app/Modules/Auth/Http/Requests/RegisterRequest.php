@@ -19,7 +19,7 @@ class RegisterRequest extends FormRequest
             'email' => ['required', 'email', 'max:190', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             // If you have roles, you can validate it too (optional):
-            // 'role' => ['nullable', 'in:admin,seller,customer'],
+            'role' => ['nullable', 'in:admin,seller,customer'],
         ];
     }
 }

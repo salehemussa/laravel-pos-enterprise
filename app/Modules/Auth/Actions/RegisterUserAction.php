@@ -29,6 +29,7 @@ class RegisterUserAction
                 'password' => Hash::make($data->password),
                 // If you store role in users table:
                 'role' => $data->role ?? 'customer',
+
             ]);
 
             // Fire a domain event (decouples side effects like email/sms)

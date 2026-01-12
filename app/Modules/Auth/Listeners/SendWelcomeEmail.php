@@ -1,14 +1,20 @@
 <?php
 
-namespace App\Modules\Auth\Events;
+namespace App\Modules\Auth\Listeners;
 
-use App\Models\User;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
+use App\Modules\Auth\Events\UserRegistered;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 
-class UserRegistered
+class SendWelcomeEmail implements ShouldQueue
 {
-    use Dispatchable, SerializesModels;
+    use InteractsWithQueue;
 
-    public function __construct(public readonly User $user) {}
+    public function handle(UserRegistered $event): void
+    {
+        $user = $event->user;
+
+        // mfano tu (baadaye email)
+        // Mail::to($user->email)->send(new WelcomeMail($user));
+    }
 }

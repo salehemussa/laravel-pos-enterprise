@@ -1,28 +1,12 @@
 <?php
 
-namespace App\Modules\Products;
+use Illuminate\Support\Facades\Route;
+use App\Modules\Products\Http\Controllers\ProductController;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Gate;
-use App\Models\Product as ProductModel;
-use App\Modules\Products\Policies\ProductPolicy;
-use App\Modules\Products\Repositories\Contracts\ProductRepository;
-use App\Modules\Products\Repositories\Eloquent\EloquentProductRepository;
-
-class ProductsModuleServiceProvider extends ServiceProvider
-{
-    public function register(): void
-    {
-        // Bind contract => implementation (clean dependency management)
-        $this->app->bind(ProductRepository::class, EloquentProductRepository::class);
-    }
-
-    public function boot(): void
-    {
-        // Load module API routes
-        $this->loadRoutesFrom(__DIR__ . '/Routes/api.php');
-
-        // Register policy for Product model
-        Gate::policy(ProductModel::class, ProductPolicy::class);
-    }
-}
+Route::middleware('auth:api')->group(function () {
+    Route::get('products', [ProductController::class, 'index']);
+    Route::post('products', [ProductController::class, 'store']);
+    Route::get('products/{product}', [ProductController::class, 'show']);
+    Route::put('products/{product}', [ProductController::class, 'update']);
+    Route::delete('products/{product}', [ProductController::class, 'destroy']);
+});

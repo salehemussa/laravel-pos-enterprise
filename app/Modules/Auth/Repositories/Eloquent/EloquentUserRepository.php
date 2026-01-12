@@ -2,6 +2,7 @@
 
 namespace App\Modules\Auth\Repositories\Eloquent;
 
+
 use App\Models\User;
 use App\Modules\Auth\Repositories\Contracts\UserRepository;
 

@@ -19,7 +19,7 @@ class CreateProductAction
             // Business rule example: SKU should not contain spaces (optional)
             if (preg_match('/\s/', $data->sku)) {
                 throw ValidationException::withMessages([
-                    'sku' => 'SKU must not contain spaces.',
+                    'sku' => 'SKU must not contain spaces.',                                  
                 ]);
             }
 
