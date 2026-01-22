@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -38,9 +41,18 @@ class RouteServiceProvider extends ServiceProvider
                     require app_path('Modules/Reports/Routes/api.php');
                 });
 
-            // Web routes (if needed later)
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
         });
-    }
+
+
+             RateLimiter::for('api', function (Request $request) {
+               // Default API limiter: 60/min per user (if logged in), else per IP
+              return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+                  });
+
+             RateLimiter::for('login', function (Request $request) {
+                 // Stricter: 10/min per IP + email (helps against brute force)
+                 $key = strtolower($request->input('email', 'guest')).'|'.$request->ip();
+             return Limit::perMinute(10)->by($key);
+                 });
+    } 
 }

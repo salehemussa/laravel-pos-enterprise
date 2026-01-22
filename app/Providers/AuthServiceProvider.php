@@ -11,7 +11,7 @@ class AuthServiceProvider extends ServiceProvider
      */
 
     protected $policies = [
-    \App\Models\Product::class => \App\Modules\Products\Policies\ProductPolicy::class,
+          \App\Models\Product::class => \App\Modules\Products\Policies\ProductPolicy::class,
     ];
 
     public function register(): void

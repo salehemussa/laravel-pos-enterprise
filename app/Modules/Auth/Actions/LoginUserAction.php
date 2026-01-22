@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Modules\Auth\DTOs\LoginData;
 use App\Modules\Auth\Repositories\Contracts\UserRepository;
 use Illuminate\Auth\AuthenticationException;
+use App\Modules\Auth\Exceptions\InvalidCredentialsException;
 
 class LoginUserAction
 {
@@ -31,6 +32,7 @@ class LoginUserAction
 
         if (!$token) {
             throw new AuthenticationException('Invalid email or password.');
+            // throw new InvalidCredentialsException;
         }
 
         /** @var User $user */
